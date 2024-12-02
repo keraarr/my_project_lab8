@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library>
+    <book>
+        <author>Уинстон Черчилль</author>
+        <title>Мировой кризис</title>
+        <year>1923</year>
+        <genre>Историческая литература</genre>
+        <pages>640</pages>
+    </book>
+    <book>
+        <author>Барак Обама</author>
+        <title>Дерзость надежды</title>
+        <year>2006</year>
+        <genre>Политическая литература</genre>
+        <pages>480</pages>
+    </book>
+    <book>
+        <author>Маргарет Тэтчер</author>
+        <title>Искусство управления государством</title>
+        <year>1993</year>
+        <genre>Историческая литература</genre>
+        <pages>368</pages>
+    </book>
+    <book>
+        <title>Моя борьба</title>
+        <author>Адольф Гитлер</author>
+        <year>1925</year>
+        <genre>Политическая литература</genre>
+        <pages>800</pages>
+    </book>
+    <book>
+        <title>Война и мир</title>
+        <author>Лев Толстой</author>
+        <year>1869</year>
+        <genre>Историческая литература</genre>
+        <pages>1300</pages>
+    </book>
+    <book>
+        <title>Государь</title>
+        <author>Никколо Макиавелли</author>
+        <year>1532</year>
+        <genre>Политическая философия</genre>
+        <pages>100</pages>
+    </book>
+    <book>
+        <title>Долгая телеграмма</title>
+        <author>Джордж Кеннан</author>
+        <year>1946</year>
+        <genre>Политическая аналитика</genre>
+        <pages>250</pages>
+    </book>
+    <book>
+        <title>О свободе</title>
+        <author>Джон Стюарт Милль</author>
+        <year>1859</year>
+        <genre>Политическая философия</genre>
+        <pages>300</pages>
+    </book>
+    <book>
+        <title>Путь к социализму</title>
+        <author>Фидель Кастро</author>
+        <year>1961</year>
+        <genre>Политическая литература</genre>
+        <pages>200</pages>
+    </book>
+    <book>
+        <title>Происхождение тоталитаризма</title>
+        <author>Ханна Арендт</author>
+        <year>1951</year>
+        <genre>Политическая философия</genre>
+        <pages>500</pages>
+    </book>
+    <book>
+        <title>Искусство войны</title>
+        <author>Сунь Цзы</author>
+        <year>5 век до н.э.</year>
+        <genre>Политическая философия</genre>
+        <pages>100</pages>
+    </book>
+    <book>
+        <title>Богатство народов</title>
+        <author>Адам Смит</author>
+        <year>1776</year>
+        <genre>Политическая литература</genre>
+        <pages>1000</pages>
+    </book>
+    <book>
+        <title>О демократизации в Америке</title>
+        <author>Алексис де Токвиль</author>
+        <year>1835</year>
+        <genre>Политическая философия</genre>
+        <pages>500</pages>
+    </book>
+    <book>
+        <title>Капитал</title>
+        <author>Карл Маркс</author>
+        <year>1867</year>
+        <genre>Политическая литература</genre>
+        <pages>800</pages>
+    </book>
+    <book>
+        <title>Двухлетнее планирование</title>
+        <author>Мао Цзэдун</author>
+        <year>1956</year>
+        <genre>Политическая литература</genre>
+        <pages>150</pages>
+    </book>
+    <book>
+        <title>Лидерство и кризисы</title>
+        <author>Ли Куан Ю</author>
+        <year>2000</year>
+        <genre>Политическая философия</genre>
+        <pages>350</pages>
+    </book>
+    <book>
+        <title>Политика</title>
+        <author>Аристотель</author>
+        <year>4 век до н.э.</year>
+        <genre>Политическая философия</genre>
+        <pages>250</pages>
+    </book>
+    <book>
+        <title>Записки о Второй мировой войне</title>
+        <author>Уинстон Черчилль</author>
+        <year>1948</year>
+        <genre>Историческая литература</genre>
+        <pages>1000</pages>
+    </book>
+
+
+</library>

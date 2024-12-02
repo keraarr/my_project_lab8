@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="author" content="Keraarr"> <!-- Указание автора страницы -->
+    <meta name="keywords" content="Политика,Политология,Лекция,html"> <!-- Ключевые слова для SEO -->
+    <meta name="description" content="Этот сайт содержит в себе лекцию по предмету политология"> <!-- Описание страницы для поисковых систем -->
+    <title>Лаб работа №7 кера</title> <!-- Заголовок страницы, отображаемый на вкладке браузера -->
+
+     <link rel="stylesheet" href="style.css">
+  <!-- Подключаем Vue.js -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <!-- Подключаем jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Подключаем GSAP для анимаций -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js"></script>
+    <!-- Подключаем Popper.js и Bootstrap для всплывающих подсказок -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        /* Основные стили для страницы */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    padding: 20px 0;
+}
+
+h2 {
+    color: #34495e;
+    margin-top: 20px;
+}
+
+/* Кнопки */
+button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+/* Стили для списка книг */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #ecf0f1;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+/* Стили для таблицы */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px 20px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #3498db;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Стили для форм ввода */
+#controls {
+    margin-top: 20px;
+    text-align: center;
+}
+
+input[type="text"], select {
+    padding: 10px;
+    font-size: 16px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+}
+
+input[type="text"]:focus, select:focus {
+    border-color: #3498db;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    table {
+        font-size: 14px;
+    }
+
+    input[type="text"], select {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+
+
+
+
+.scroll-btn {
+    position: fixed;
+    bottom: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 100;
+}
+
+#scrollUp {
+    right: 20px;
+}
+
+#scrollDown {
+    left: 20px;
+}
+
+.scroll-btn:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+
+        /* Альтернативные стили */
+        .alt-theme {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .alt-theme header {
+            background-color: #333;
+            color: #66ffff;
+        }
+
+        .alt-theme table th {
+            background-color: #555;
+            color: #fff;
+        }
+
+        .alt-theme table tr:nth-child(even) {
+            background-color: #444;
+        }
+     
+        .timeline-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.timeline {
+  position: relative;
+  height: 4px;
+  background-color: #555;
+  margin: 30px 0;
+}
+
+.timeline-point {
+  position: absolute;
+  top: -10px;
+  width: 20px;
+  height: 20px;
+  background-color: #1976D2;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.point-label {
+  position: absolute;
+  top: 25px;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: #333;
+}
+
+.info-box {
+  background: #f9f9f9;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+        .note-box {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .note-box input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .note-box button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .note-box button:hover {
+            background-color: #218838;
+        }
+        .content {
+            padding: 20px;
+            margin-top: 100px;
+        }
+        .scroll-up-btn {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background-color: #007bff;
+            color: white;
+            font-size: 24px;
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .scroll-up-btn:hover {
+            background-color: #0056b3;
+        }
+        .comment-box {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .comment-box input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .comment-box button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .comment-box button:hover {
+            background-color: #218838;
+        }
+
+
+        h1, h2, h3 {
+            color: #2c3e50; /* Цвет заголовков */
+            margin-bottom: 20px; /* Отступ снизу у заголовков */
+            text-align: center; /* Выравнивание заголовков по центру */
+        }
+
+        p {
+            margin-bottom: 20px; /* Отступ снизу у абзацев */
+            font-size: 1.1rem; /* Размер шрифта для абзацев */
+            line-height: 1.8; /* Высота строки для абзацев */
+        }
+
+        #shadow {
+            text-shadow: 2px 2px 5px #000000; /* Тень для текста с id="shadow" */
+        }
+
+        a {
+            color: #3498db; /* Цвет ссылок */
+        }
+
+        ol {
+            margin-bottom: 20px; /* Отступ снизу у упорядоченных списков */
+        }
+
+        
+
+        .block1 {
+            border: 1px solid black; /* Черная граница вокруг блока */
+            padding: 2cm 1cm 2cm 3cm; /* Внутренние отступы блока */
+            background-color: lightgray; /* Цвет фона блока */
+            font-family: 'Times New Roman', Times, serif; /* Шрифт для текста внутри блока */
+            font-size: 14pt; /* Размер шрифта внутри блока */
+            text-indent: 1.5cm; /* Отступ первого символа в абзаце */
+        }
+
+        .block1::first-letter {
+            font-size: 18pt; /* Размер первого символа в блоке */
+            font-weight: bold; /* Жирный шрифт для первого символа */
+        }
+
+        
+
+        
+
+        .float-img {
+            float: left; /* Обтекание изображения слева */
+            margin: 0 15px 15px 0; /* Отступы вокруг изображения */
+            width: 150px; /* Ширина изображения */
+        }
+
+        .float-img:hover {
+            float: left; /* Обтекание изображения слева при наведении */
+            margin: 0 15px 15px 0; /* Отступы при наведении */
+            width: 300px; /* Увеличение ширины изображения при наведении */
+            transition: all 1s ease; /* Плавный переход для всех изменений */
+        }
+
+        a:hover {
+            text-decoration: underline; /* Подчеркивание ссылок при наведении */
+            color: #d14836; /* Цвет ссылок при наведении */
+        }
+
+        header {
+            background-color: #66ffff; /* Цвет фона для заголовка */
+            color: #fff; /* Цвет текста в заголовке */
+            padding: 20px; /* Внутренние отступы для заголовка */
+            text-align: center; /* Выравнивание текста в заголовке по центру */
+            font-size: 24px; /* Размер шрифта для текста в заголовке */
+            font-weight: bold; /* Жирный шрифт для текста в заголовке */
+            text-transform: uppercase; /* Преобразование текста в верхний регистр */
+            border-bottom: 0px solid #fff; /* Нижняя граница заголовка (не отображается) */
+            border-radius: 20px; /* Закругление углов заголовка */
+        }
+
+        header a {
+            color: #fff; /* Цвет ссылок в заголовке */
+            text-decoration: none; /* Убираем подчеркивание для ссылок в заголовке */
+            margin: 0 10px; /* Отступы вокруг ссылок в заголовке */
+            transition: color 0.3s; /* Плавный переход цвета ссылок */
+        }
+
+        header a:hover {
+            color: #ff8c05; /* Цвет ссылок в заголовке при наведении */
+        }
+
+        div {
+            background-color: #f2f2f2; /* Цвет фона для div-элементов */
+            border: 2px solid #333; /* Граница для div-элементов */
+            border-radius: 10px; /* Закругление углов для div-элементов */
+            padding: 20px; /* Внутренние отступы для div-элементов */
+            margin: 10px; /* Внешние отступы для div-элементов */
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1); /* Тень для div-элементов */
+            text-align: center; /* Выравнивание текста в div-элементах по центру */
+            font-family: Arial, sans-serif; /* Шрифт для текста в div-элементах */
+            color: #333; /* Цвет текста в div-элементах */
+        }
+
+        /* Стили для слайдера */
+        .slider {
+            width: 100%; /* Ширина слайдера на всю доступную ширину */
+            max-width: 500px; /* Максимальная ширина слайдера */
+            margin: auto; /* Центрирование слайдера */
+            text-align: center; /* Выравнивание текста в слайдере по центру */
+        }
+
+        .slider img {
+            width: 100%; /* Ширина изображений на всю доступную ширину слайдера */
+            display: none; /* Скрытие изображений по умолчанию */
+        }
+
+        .slider img.active {
+            display: block; /* Отображение активного изображения */
+        }
+
+        /* Выпадающее меню */
+        .dropdown {
+            position: relative; /* Установка относительного позиционирования для выпадающего меню */
+            display: inline-block; /* Отображение в виде строчного блока */
+        }
+
+        .dropdown-content {
+            display: none; /* Скрытие содержимого выпадающего меню по умолчанию */
+            position: absolute; /* Абсолютное позиционирование для содержимого */
+            background-color: #f8f8f8; /* Цвет фона для выпадающего меню */
+            min-width: 160px; /* Минимальная ширина выпадающего меню */
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2); /* Тень для выпадающего меню */
+            z-index: 1; /* Установка z-index для наложения */
+        }
+
+        .dropdown-content a {
+            color: black; /* Цвет текста ссылок в выпадающем меню */
+            padding: 12px 16px; /* Внутренние отступы для ссылок в выпадающем меню */
+            text-decoration: none; /* Убираем подчеркивание для ссылок */
+            display: block; /* Отображение ссылок в блочном формате */
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1; /* Цвет фона ссылок при наведении в выпадающем меню */
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block; /* Отображение содержимого выпадающего меню при наведении на родительский элемент */
+        }
+        #info {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #000;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        body.dark-theme {
+  background-color: #000;
+  color: #fff;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 20px;
+  cursor: pointer;
+}
+
+button.dark-theme {
+  background-color: #444;
+  color: #fff;
+  border: none;
+}
+#bookList { margin: 10px 0; }
+        #controls { margin: 10px 0; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <p id="shadow" align="center"> <!-- Абзац с id "shadow", выравненный по центру -->
+            <font size="7" color="red"><strong>И</strong></font> <!-- Красный текст "И" размером 7 -->
+            <font size="5"><strong>стория развития и основные этапы политической науки</strong></font> <!-- Заголовок второго уровня, размер 5 -->
+        </p>
+        <hr color="blue"> <!-- Горизонтальная линия синего цвета -->
+        <nav> <!-- Начало навигационного меню -->
+            <a href="https://www.instagram.com/keraarr?igsh=MXFхуйoMTc" target="_blank">Контакты</a> <!-- Ссылка на Instagram, открывающаяся в новой вкладке -->
+            <a href="https://www.do.ektu.kz/doektu/?lang=ru" target="_blank">Источник</a> <!-- Ссылка на источник, открывающаяся в новой вкладке -->
+            <!-- Добавляем выпадающее меню -->
+            <div class="dropdown"> <!-- Начало блока для выпадающего меню -->
+                <a href="#">Дополнительно</a> <!-- Ссылка для выпадающего меню -->
+                <div class="dropdown-content"> <!-- Содержимое выпадающего меню -->
+                    <a href="https://ru.wikipedia.org/wiki/Демократия" target="_blank">Демократия</a> <!-- Ссылка на статью о демократии -->
+                    <a href="https://ru.wikipedia.org/wiki/Политическая_элита" target="_blank">Политические элиты</a> <!-- Ссылка на статью о политических элитах -->
+                    <a href="https://ru.wikipedia.org/wiki/Политическая_власть#:~:text=Полити́ческая%20власть%20или%20государственная%20власть,в%20Конституции%20и%20федеральных%20законах" target="_blank">Политическая власть</a> <!-- Ссылка на статью о политической власти -->
+                </div>
+            </div>
+        </nav> <!-- Конец навигационного меню -->
+    </header>
+
+    <h1>План темы:</h1> <!-- Заголовок первого уровня -->
+    <ol> <!-- Начало упорядоченного списка -->
+        <li>Брахманизм</li> <!-- Элемент списка -->
+        <li>Политические идеи средневековья</li> <!-- Элемент списка -->
+        <li>Развитие политической мысли в эпоху Возрождения</li> <!-- Элемент списка -->
+        <li>Мнение Платона по поводу государства</li> <!-- Элемент списка -->
+    </ol> <!-- Конец упорядоченного списка -->
+
+    <h2><span class="underline-text">БРАХМАНИЗМ</span> (Древняя Индия)</h2> <!-- Заголовок второго уровня с подчеркнутым текстом -->
+    <dl> <!-- Начало описательного списка -->
+        <dt><strong><a name="brah" href="https://en.wikipedia.org/wiki/Historical_Vedic_Religion" target="_blank">Брахманизм</a></strong></dt> <!-- Заголовок термина с ссылкой -->
+        <dd> - это прежде всего политеистическая религия, с богами, сохранившими свое природное значение (Небо, Огонь, Солнце, Гром и т. д.), обставленная сложнейшим ритуалом молитв и жертвоприношений.</dd> <!-- Описание термина -->
+
+        <dt><strong><a href="https://ru.wikipedia.org/wiki/Политика#:~:text=Политика%20(др.-греч.%20????????%20—%20«государственная,политики%20ведётся%20в%20рамках%20политологии" target="_blank">Политика</a></strong></dt> <!-- Заголовок термина с ссылкой -->
+        <dd> — одна из сфер человеческой деятельности, в которой государства в лице органов государственной власти и их должностных лиц.</dd> <!-- Описание термина -->
+
+        <pre>4 варна (социальный слой):</pre> <!-- Текст в предварительном формате -->
+        <ul type="square"> <!-- Начало неупорядоченного списка с квадратными маркерами -->
+            <li><font size="4"><strong>Брамин</strong> <span class="italic-text">(жрецы, духовенство, учителя)</span></font></li> <!-- Элемент списка -->
+            <li><font size="4"><strong>Кшатрия</strong> <span class="italic-text">(билеушілер, жауынгерлер)</span></font></li> <!-- Элемент списка -->
+            <li><font size="4"><strong>Вайшья</strong> <span class="italic-text">(маудагер, ремесленник, крестьянин)</span></font></li> <!-- Элемент списка -->
+            <li><font size="4"><strong>Шудра</strong> <span class="italic-text">(няня)</span></font></li> <!-- Элемент списка -->
+        </ul> <!-- Конец неупорядоченного списка -->
+
+        <blockquote> <!-- Начало цитаты -->
+            <span class="italic-text">Семья - идеальная модель государственного устройства</span>. <strong>Конфуций</strong> <!-- Цитата с автором -->
+        </blockquote> <!-- Конец цитаты -->
+
+        <img src="https://kazaksha.info/wp-content/uploads/2017/11/036.jpg" alt="Аль-Фараби" class="float-img" title="Это Аль-Фараби"> <!-- Изображение с подписью и альтернативным текстом -->
+
+        <div class="block1"> <!-- Начало блока с классом "block1" -->
+            Аль-Фараби были универсальными. Его интересовали как гуманитарные, так и естественные науки. <!-- Текст внутри блока -->
+        </div> <!-- Конец блока -->
+
+        <table id="dataTable" border="1" width="50%" bordercolor="red"> <!-- Начало таблицы с границей, шириной 50% и красной границей -->
+            <a name="table"></a> <!-- Якорь для ссылки на таблицу -->
+            <caption><big><strong>Платон разделил государство на 2 типа</strong></big></caption> <!-- Заголовок таблицы -->
+            <thead> <!-- Начало строки таблицы -->
+                    <tr>
+                <th><big>Характеристика</big></th> <!-- Заголовок колонки -->
+                <th><big>Тип государства</big></th> <!-- Заголовок колонки -->
+                    </tr>
+            </thead> <!-- Конец строки таблицы -->
+            <tbody> <!-- Начало строки таблицы -->
+                <tr>
+                <td><b>Тираническое</b></td> <!-- Ячейка с текстом -->
+                <td>Политическая форма правления</td> <!-- Ячейка с текстом -->
+                </tr> <!-- Конец строки таблицы -->
+                <tr> <!-- Начало строки таблицы -->
+                <td><b>Аристократическое</b></td> <!-- Ячейка с текстом -->
+                <td>Лучшие люди управляют</td> <!-- Ячейка с текстом -->
+                </tr> <!-- Конец строки таблицы -->
+                <tr> <!-- Начало строки таблицы -->
+                <td><b>Феодальное</b></td> <!-- Ячейка с текстом -->
+                <td>Феодальная монархия</td> <!-- Ячейка с текстом -->
+                </tr> <!-- Конец строки таблицы -->
+                <tr> <!-- Начало строки таблицы -->
+                <td><b>Буржуазный</b></td> <!-- Ячейка с текстом -->
+                <td>Буржуазная республика.</td> <!-- Ячейка с текстом -->
+                </tr> <!-- Конец строки таблицы -->
+                <tr> <!-- Начало строки таблицы -->
+                <td><b>Социальное</b></td> <!-- Ячейка с текстом -->
+                <td>Социальное правовое государство.</td> <!-- Ячейка с текстом -->
+                </tr> <!-- Конец строки таблицы -->
+            </tbody>
+        </table> <!-- Конец таблицы -->
+    </dl> <!-- Конец описательного списка -->
+    <h1>Сортировка таблицы</h1>
+<button id="Сортировка">Сортировать по имени</button>
+<button id="Добавитьстроку">Добавить строку</button>
+<button id="Удалитьстроку">Удалить последнюю строку</button>
+<button id="Изменитьстиль">Изменить стиль таблицы</button>
+
+<h1>Информация о вашем браузере</h1>
+<button id="Показатьинфо">Показать информацию</button>
+<div id="info"></div>
+
+
+    
+
+    <!-- Слайдер изображений -->
+    <div class="slider"> <!-- Начало слайдера -->
+        <img src="https://kazaksha.info/wp-content/uploads/2017/11/036.jpg" alt="Слайд 1" class="active"> <!-- Первое изображение с классом "active" -->
+        <img src="https://s1.showslide.ru/s_slide/6729/f591d69c-c6a6-4de6-b07d-83a63a10fdaf.jpeg" alt="Слайд 2"> <!-- Второе изображение -->
+        <img src="https://mypresentation.ru/documents/65905fdf2ef59750fb6e02efef27dc41/img4.jpg" alt="Слайд 3"> <!-- Третье изображение -->
+        <img src="https://theslide.ru/img/thumbs/b5db0fad878fb4250baf36aac9296260-800x.jpg" alt="Слайд 4"> <!-- Четвертое изображение -->
+        <img src="https://avatars.mds.yandex.net/i?id=4547813ed179c155270e62fbacb049f8_l-4012918-images-thumbs&n=13" alt="Слайд 5"> <!-- Пятое изображение -->
+    </div> <!-- Конец слайдера -->
+
+    <h3 style="color:#d5f7e8 ">Источники моего знания</h3> <!-- Заголовок третьего уровня с цветом текста -->
+    <ul style="color:#d5f7e8"> <!-- Начало неупорядоченного списка с цветом текста -->
+        <li><a style="color:#d5f7e8" href="https://itproger.com/" target="_blank">Полезный сайт</a></li> <!-- Ссылка на полезный сайт -->
+        <li><a style="color:#d5f7e8" href="https://developer.mozilla.org/ru/docs/Learn/Getting_started_with_the_web/HTML_basics" target="_blank">Полезный сайт №2</a></li> <!-- Ссылка на второй полезный сайт -->
+    </ul> <!-- Конец неупорядоченного списка -->
+
+    <!-- Блок комментариев -->
+        <div class="comment-box">
+            <h3>Оставьте комментарий</h3>
+            <input type="text" id="comment-input" placeholder="Ваш комментарий...">
+            <button id="submit-comment">Отправить</button>
+            <div id="comment-output"></div>
+        </div>
+    
+    
+    
+        
+        <div id="timeline-app">
+  <h2>История развития политической науки</h2>
+  <div class="timeline-container">
+    <div class="timeline">
+      <div
+        v-for="(stage, index) in stages"
+        :key="index"
+        class="timeline-point"
+        :style="{ left: `${stage.position}%` }"
+        @click="selectStage(stage)"
+      >
+        <span class="point-label">{{ stage.year }}</span>
+      </div>
+    </div>
+    <div v-if="selectedStage" class="info-box">
+      <h3>{{ selectedStage.title }}</h3>
+      <p>{{ selectedStage.description }}</p>
+    </div>
+  </div>
+</div>
+
+
+        
+        <!-- Блок визуальных заметок -->
+        <div class="note-box">
+            <h3>Оставьте заметку о событии</h3>
+            <input type="text" id="note-input" placeholder="Ваши заметки...">
+            <button id="submit-note">Добавить заметку</button>
+            <button id="toggle-style">Сменить стиль</button> <!-- Кнопка для смены стиля -->
+            <div id="note-output"></div>
+        </div>
+    </div>
+    <!-- Кнопки прокрутки -->
+    <button id="scrollUp" class="scroll-btn">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    <button id="scrollDown" class="scroll-btn">
+        <i class="fas fa-arrow-down"></i>
+    </button>
+
+     <h1>Библиотека книг политиков</h1>
+
+    
+    <button id="loadPoliticsBooksBtn">Подробнее про политику</button>
+
+    
+    <div id="bookListContainer" style="display:none;">
+        <h2>Список книг и авторов:</h2>
+        <ul id="bookList"></ul>
+
+        
+        <h2>Таблица книг:</h2>
+        <table id="bookTable">
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Автор</th>
+                    <th>Жанр</th>
+                    <th>Год</th>
+                    <th>Страницы</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        
+        <div id="controls">
+            
+            <label for="searchInput">Поиск по названию:</label>
+            <input type="text" id="searchInput" placeholder="Введите название книги">
+            <button onclick="searchBooks()">Поиск</button>
+
+            <br>
+
+            
+            <label for="sortBy">Сортировать по:</label>
+            <select id="sortBy">
+                <option value="title">Название</option>
+                <option value="year">Год</option>
+                <option value="pages">Страницы</option>
+            </select>
+            <button onclick="sortBooks()">Сортировать</button>
+
+            <br>
+
+            
+            <label for="genreFilter">Фильтровать по жанру:</label>
+            <select id="genreFilter">
+                <option value="">Все жанры</option>
+                <option value="Политическая литература">Политическая литература</option>
+                <option value="Историческая литература">Историческая литература</option>
+                <option value="Политическая философия">Политическая философия</option>
+                <option value="Политическая аналитика">Политическая аналитика</option>
+            </select>
+            <button onclick="filterBooks()">Фильтровать</button>
+        </div>
+    </div>
+
+
+
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+
+
+    
+
+    <script>
+        // Загружаем XML-файл
+function loadXML(callback) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "library.xml", true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            callback(xhr.responseXML);
+        }
+    };
+    xhr.send();
+}
+
+// Отображаем книги в виде списка и таблицы
+function displayBooks(xml) {
+    const books = xml.getElementsByTagName("book");
+    const bookList = document.getElementById("bookList");
+    const bookTableBody = document.getElementById("bookTable").getElementsByTagName("tbody")[0];
+    
+    // Очистка списка и таблицы перед добавлением новых данных
+    bookList.innerHTML = "";
+    bookTableBody.innerHTML = "";
+
+    for (let book of books) {
+        const author = book.getElementsByTagName("author")[0].textContent;
+        const title = book.getElementsByTagName("title")[0].textContent;
+        const year = book.getElementsByTagName("year")[0].textContent;
+        const genre = book.getElementsByTagName("genre")[0].textContent;
+        const pages = book.getElementsByTagName("pages")[0].textContent;
+
+        // Добавляем в список
+        const listItem = document.createElement("li");
+        listItem.textContent = `${title} - ${author}`;
+        bookList.appendChild(listItem);
+
+        // Добавляем в таблицу
+        const row = bookTableBody.insertRow();
+        row.insertCell(0).textContent = title;
+        row.insertCell(1).textContent = author;
+        row.insertCell(2).textContent = genre;
+        row.insertCell(3).textContent = year;
+        row.insertCell(4).textContent = pages;
+    }
+}
+
+// Функция для отображения книги и скрытия кнопки
+function loadPoliticsBooks() {
+    const button = document.getElementById("loadPoliticsBooksBtn");
+    button.style.display = "none";  // Скрываем кнопку после нажатия
+    const bookListContainer = document.getElementById("bookListContainer");
+    bookListContainer.style.display = "block";  // Показываем контейнер с книгами
+
+    // Загружаем и отображаем книги из XML
+    loadXML(displayBooks);
+}
+
+// Фильтрация по жанру
+function filterBooks() {
+    const genreFilter = document.getElementById("genreFilter").value;
+    loadXML((xml) => {
+        const books = xml.getElementsByTagName("book");
+        const filteredBooks = Array.from(books).filter(book => {
+            const genre = book.getElementsByTagName("genre")[0].textContent;
+            return genreFilter === "" || genre === genreFilter;
+        });
+        displayBooks({ getElementsByTagName: () => filteredBooks });
+    });
+}
+
+// Сортировка книг
+function sortBooks() {
+    const sortBy = document.getElementById("sortBy").value;
+    loadXML((xml) => {
+        const books = Array.from(xml.getElementsByTagName("book"));
+        books.sort((a, b) => {
+            const aValue = a.getElementsByTagName(sortBy)[0].textContent;
+            const bValue = b.getElementsByTagName(sortBy)[0].textContent;
+            return (aValue > bValue) ? 1 : (aValue < bValue) ? -1 : 0;
+        });
+        displayBooks({ getElementsByTagName: () => books });
+    });
+}
+
+// Поиск по названию
+function searchBooks() {
+    const searchQuery = document.getElementById("searchInput").value.toLowerCase();
+    loadXML((xml) => {
+        const books = xml.getElementsByTagName("book");
+        const searchResults = Array.from(books).filter(book => {
+            const title = book.getElementsByTagName("title")[0].textContent.toLowerCase();
+            return title.includes(searchQuery);
+        });
+        displayBooks({ getElementsByTagName: () => searchResults });
+    });
+}
+
+// Инициализация
+document.getElementById("loadPoliticsBooksBtn").onclick = loadPoliticsBooks;
+
+
+
+
+
+        $(document).ready(function() {
+    // Прокрутка вверх
+    $('#scrollUp').click(function() {
+        $('html, body').animate({ scrollTop: 0 }, 800, 'easeInOutQuad');
+    });
+
+    // Прокрутка вниз
+    $('#scrollDown').click(function() {
+        $('html, body').animate({ scrollTop: $(document).height() }, 800, 'easeInOutQuad');
+    });
+});
+
+
+
+        $(document).ready(function() {
+  $('#toggle-style').click(function() {
+    // Переключаем класс 'dark-theme' на <body> и кнопку
+    $('body').toggleClass('dark-theme');
+    $(this).toggleClass('dark-theme');
+    
+    // Меняем текст кнопки в зависимости от текущего стиля
+    if ($('body').hasClass('dark-theme')) {
+      $(this).text('Вернуть светлый стиль');
+    } else {
+      $(this).text('Сменить стиль');
+    }
+  });
+});
+
+
+        new Vue({
+  el: '#timeline-app',
+  data: {
+    stages: [
+      { year: 'Древний период', position: 0, title: 'Древняя Греция и Рим', description: 'Развитие политической философии с мыслителями, такими как Платон и Аристотель.' },
+      { year: 'Средние века', position: 25, title: 'Средневековая политическая мысль', description: 'Влияние христианства и труды Августина и Аквинского.' },
+      { year: 'Возрождение', position: 50, title: 'Возрождение и раннее Новое время', description: 'Рост национальных государств и идеи Макиавелли.' },
+      { year: 'Просвещение', position: 75, title: 'Эпоха Просвещения', description: 'Развитие демократии и теории общественного договора с Гоббсом, Локком и Руссо.' },
+      { year: 'Современный период', position: 100, title: 'Современная политическая наука', description: 'Появление политологии как академической дисциплины.' },
+    ],
+    selectedStage: null
+  },
+  methods: {
+    selectStage(stage) {
+      this.selectedStage = stage;
+      // Плавная прокрутка к информационному блоку
+      $('html, body').animate({
+        scrollTop: $(".info-box").offset().top
+      }, 500);
+    }
+  }
+});
+
+
+    // Инициализация всплывающих подсказок (tooltip) - используя jQuery
+    $(document).ready(function() {
+        $('[data-bs-toggle="tooltip"]').tooltip();
+    });
+
+    // Анимация событий с использованием GSAP (упрощённо)
+    gsap.from('.timeline-event', {
+        opacity: 0,
+        y: 50,
+        duration: 1,
+        stagger: 0.3
+    });
+
+    // Добавление визуальных заметок
+    $('#submit-note').click(function() {
+        var noteText = $('#note-input').val();
+        if (noteText !== '') {
+            var newNote = $('<p>').text(noteText);
+            newNote.hide().appendTo('#note-output').fadeIn(1000);
+            $('#note-input').val('');
+        }
+    });
+
+    // Показываем стрелку при прокрутке страницы
+    $(window).scroll(function() {
+        if ($(this).scrollTop() > 100) {
+            $('.scroll-up-btn').fadeIn();
+        } else {
+            $('.scroll-up-btn').fadeOut();
+        }
+    });
+
+    // Прокручиваем страницу вверх при клике на стрелку
+    $('.scroll-up-btn').click(function() {
+        $('html, body').animate({ scrollTop: 0 }, 1000);
+    });
+
+    // Анимация элементов при загрузке страницы
+    gsap.from('.content h1', { opacity: 0, y: -50, duration: 1 });
+    gsap.from('.comment-box', { opacity: 0, x: -100, duration: 1 });
+
+    // Добавление нового комментария с анимацией
+    $('#submit-comment').click(function() {
+        var commentText = $('#comment-input').val();
+        if (commentText !== '') {
+            var newComment = $('<p>').text(commentText);
+            newComment.hide().appendTo('#comment-output').fadeIn(1000);
+            $('#comment-input').val('');
+        }
+    });
+
+    // Сортировка таблицы по первой колонке
+    document.getElementById('Сортировка').addEventListener('click', function() {
+        var table = document.getElementById('dataTable');
+        var tbody = table.querySelector('tbody');
+        var rows = Array.from(tbody.querySelectorAll('tr'));
+
+        rows.sort(function(a, b) {
+            var nameA = a.cells[0].textContent.toLowerCase();
+            var nameB = b.cells[0].textContent.toLowerCase();
+            return nameA.localeCompare(nameB);
+        });
+
+        rows.forEach(function(row) {
+            tbody.appendChild(row);
+        });
+    });
+
+    // Добавление строки в таблицу
+    document.getElementById('Добавитьстроку').addEventListener('click', function() {
+        var characteristic = prompt('Введите характеристику:');
+        var type = prompt('Введите тип государства:');
+
+        if (characteristic && type) {
+            var tbody = document.getElementById('dataTable').querySelector('tbody');
+            var newRow = document.createElement('tr');
+            newRow.innerHTML = '<td><strong>' + characteristic + '</strong></td><td>' + type + '</td>';
+            tbody.appendChild(newRow);
+        } else {
+            alert('Заполните оба поля!');
+        }
+    });
+
+    // Удаление последней строки таблицы
+    document.getElementById('Удалитьстроку').addEventListener('click', function() {
+        var tbody = document.getElementById('dataTable').querySelector('tbody');
+        var rows = tbody.querySelectorAll('tr');
+        if (rows.length > 0) {
+            if (confirm('Вы уверены, что хотите удалить последнюю строку?')) {
+                tbody.removeChild(rows[rows.length - 1]);
+            }
+        }
+    });
+
+    // Изменение стиля таблицы
+    document.getElementById('Изменитьстиль').addEventListener('click', function() {
+        var table = document.getElementById('dataTable');
+        table.style.border = '2px solid red';
+        table.style.fontSize = '20px';
+        table.style.backgroundColor = '#f1f3f2';
+    });
+
+    // Работа с объектами BOM
+    window.addEventListener('load', function() {
+        alert('Страница загружена!');
+    });
+
+    document.getElementById('Показатьинфо').addEventListener('click', function() {
+        var userAgent = navigator.userAgent;
+        var screenWidth = window.screen.width;
+        var screenHeight = window.screen.height;
+        var language = navigator.language;
+
+        var message = '<strong>Информация о браузере:</strong><br>';
+        message += 'User-Agent: ' + userAgent + '<br>';
+        message += 'Размер экрана: ' + screenWidth + ' x ' + screenHeight + '<br>';
+        message += 'Язык: ' + language;
+
+        document.getElementById('info').innerHTML = message;
+        alert('Информация о браузере показана на странице!');
+    });
+</script>
+
+
+    
+    <p align="right">&copy; 2024 Пример HTML-страницы. Все права принадлежат Кенесову Ерасылу.</p> <!-- Подпись с авторскими правами -->
+</body>
+</html>
